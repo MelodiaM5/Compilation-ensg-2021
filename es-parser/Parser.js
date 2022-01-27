@@ -114,3 +114,5 @@ class Parser {
 }
 
 module.exports = Parser
+
+//piste pour multiplication ajout d'un parse c pour gérér l'ordre.
