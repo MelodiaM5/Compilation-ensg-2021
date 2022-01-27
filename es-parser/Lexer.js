@@ -54,9 +54,9 @@ class Lexer {
 		return true
 	}
 
-	// symbol = '+' | '-' | '*' | '/' | '%' | '(' | ')'
+	// symbol =  '-' | '*' | '/' | '%' | '(' | ')'
 	testSymbol() {
-		if ("+-*/%()".includes(this.current)) return true;
+		if ("/%".includes(this.current)) return true;
 		return false
 	}
 
@@ -64,7 +64,75 @@ class Lexer {
 		if (this.testSymbol()) this.consume()
 		else return false
 
+		if(this.testPlus()) this.produce(TokenType.PLUS)
 		this.produce(TokenType.SYMBOL)
+		return true
+	}
+
+	// PLUS = '+'
+	testPlus(){
+		if("+".includes(this.current)) return true;
+		else return false
+	}
+
+	// PLUS = '+'
+	parsePlus(){
+		if(this.testPlus()) this.consume()
+		else return false
+
+		this.produce(TokenType.PLUS);
+		return true
+	}
+
+	testMoins(){
+		if("-".includes(this.current)) return true;
+		else return false
+	}
+
+	parseMoins(){
+		if(this.testMoins()) this.consume()
+		else return false
+
+		this.produce(TokenType.MOINS);
+		return true
+	}
+
+	testParOuverte(){
+		if("(".includes(this.current)) return true
+		else return false
+	}
+
+	parseParOuverte(){
+		if(this.testParOuverte()) this.consume();
+		else return false
+
+		this.produce(TokenType.PAROUVERTE);
+		return true
+	}
+
+	testParOuverte(){
+		if("(".includes(this.current)) return true
+		else return false
+	}
+
+	parseParFerm(){
+		if(this.testParFerm()) this.consume();
+		else return false
+
+		this.produce(TokenType.PARFERM);
+		return true
+	}
+
+	testMultiplication(){
+		if("(".includes(thid.current)) return true
+		else return false
+	}
+
+	parseMultiplication(){
+		if(this.testMultiplication()) this.consume();
+		else return false
+
+		this.produce(TokenType.MULTIPLICATION);
 		return true
 	}
 
@@ -87,7 +155,7 @@ class Lexer {
 	parse(src) {
 		this._src = src
 
-		while (this.parseNumber() || this.parseSymbol() || this.avoidSpace()) {
+		while (this.parseNumber() || this.parseSymbol() || this.parsePlus() || this.parseMoins|| this.parseMultiplication() || this.parseParFerm() || this.parseParOuverte() || this.avoidSpace()) {
 			// nothing to do, consume already done in functions
 		}
 
