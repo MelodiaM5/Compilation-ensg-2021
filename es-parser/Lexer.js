@@ -14,14 +14,6 @@ class Lexer {
 		return this._src[this._cursor]
 	}
 
-	test(c) {
-		if (this.current === c) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
 	consume() {
 		this._currentWord += this.current
 		this._cursor++;
@@ -54,19 +46,41 @@ class Lexer {
 		return true
 	}
 
-	// symbol =  '-' | '*' | '/' | '%' | '(' | ')'
+	// symbol =  '+' | '-' | '*' | '/' | '%' | '(' | ')'
 	testSymbol() {
 		if ("/%".includes(this.current)) return true;
 		return false
 	}
 
 	parseSymbol() {
-		if (this.testSymbol()) this.consume()
-		else return false
-
-		if(this.testPlus()) this.produce(TokenType.PLUS)
+		
+		if(this.testPlus()){ 
+			this.consume();
+			this.produce(TokenType.PLUS)
+			return true
+		}
+		else if(this.testMoins()) {
+		this.consume(); 
+		this.produce(TokenType.MOINS)
+		return true
+	}else if(this.testMultiplication()){ 
+		this.consume(); 
+		this.produce(TokenType.MULTIPLICATION)
+		return true
+	}else if(this.testParOuverte()) {
+		this.consume(); 
+		this.produce(TokenType.PAROUVERTE)
+		return true
+	}else if(this.testParFerm()){ 
+		this.consume(); 
+		this.produce(TokenType.PARFERM)
+		return true
+	}else if (this.testSymbol()){
+		this.consume();  
 		this.produce(TokenType.SYMBOL)
 		return true
+	}else{ return false}
+
 	}
 
 	// PLUS = '+'
@@ -75,65 +89,25 @@ class Lexer {
 		else return false
 	}
 
-	// PLUS = '+'
-	parsePlus(){
-		if(this.testPlus()) this.consume()
-		else return false
-
-		this.produce(TokenType.PLUS);
-		return true
-	}
-
+	//
 	testMoins(){
 		if("-".includes(this.current)) return true;
 		else return false
 	}
 
-	parseMoins(){
-		if(this.testMoins()) this.consume()
-		else return false
-
-		this.produce(TokenType.MOINS);
-		return true
-	}
-
 	testParOuverte(){
 		if("(".includes(this.current)) return true
 		else return false
 	}
 
-	parseParOuverte(){
-		if(this.testParOuverte()) this.consume();
+	testParFerm(){
+		if(")".includes(this.current)) return true
 		else return false
-
-		this.produce(TokenType.PAROUVERTE);
-		return true
-	}
-
-	testParOuverte(){
-		if("(".includes(this.current)) return true
-		else return false
-	}
-
-	parseParFerm(){
-		if(this.testParFerm()) this.consume();
-		else return false
-
-		this.produce(TokenType.PARFERM);
-		return true
 	}
 
 	testMultiplication(){
-		if("(".includes(thid.current)) return true
+		if("*".includes(this.current)) return true
 		else return false
-	}
-
-	parseMultiplication(){
-		if(this.testMultiplication()) this.consume();
-		else return false
-
-		this.produce(TokenType.MULTIPLICATION);
-		return true
 	}
 
 	// space = ' ' | '\t' | '\n' | '\l' | '\r' | '\0'
@@ -155,7 +129,7 @@ class Lexer {
 	parse(src) {
 		this._src = src
 
-		while (this.parseNumber() || this.parseSymbol() || this.parsePlus() || this.parseMoins|| this.parseMultiplication() || this.parseParFerm() || this.parseParOuverte() || this.avoidSpace()) {
+		while (this.parseNumber() || this.parseSymbol() || this.avoidSpace()) {
 			// nothing to do, consume already done in functions
 		}
 

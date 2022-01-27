@@ -9,3 +9,4 @@ const ast = new Parser().parser(tokens)
 
 console.log(src)
 console.log(tokens);
+console.log(ast)
