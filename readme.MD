@@ -183,6 +183,8 @@ func main(arg){
 
 	var c int= arg + 7
 
+    if c - arg <5{
+
 		fmt.Println("La réponse à la question suivante est Algoid, bien entendu ! Mais ne nous distrayons pas. :-)")
 	} else {
 		fmt.Println("Le résultat de " + arg + " 7 est " + d)
