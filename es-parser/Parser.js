@@ -23,16 +23,6 @@ class Parser {
 		this._cursor++;
 	}
 
-	parserNumber(){
-		if(this.current._type == TokenType.NUMBER){
-			this._pile.push(parseInt(this.current._name))
-			this.consume()
-			return true
-		}else{
-			this.parserA()
-		}
-	}
-
 	parser(tokens) {
 		this._tokens = tokens
 
@@ -46,7 +36,6 @@ class Parser {
 
 	parserA(){
 
-		
 		if(this.current._type == TokenType.NUMBER){
 
 			this._pile.push(parseInt(this.current._name))
@@ -60,18 +49,12 @@ class Parser {
 			this.parserA()
 			this.consume()
 			console.log(this._pile)
+			if(this.current){
+				this.parserB()
+		}else{
 			return true
-			
+		}
 	}
-
-	//Permet de gérer la sortie de parenthèse
-	if(this.current){
-		this.parserB()
-	}else{
-
-	return true
-	}
-
 	return true
 }
 
@@ -94,10 +77,9 @@ class Parser {
 			console.log(this._pile)
 		}
 		else if(this.current._type==TokenType.MULTIPLICATION){
-
 			this.consume()
 			console.log(this._pile)
-			this.parserNumber()
+			this.parserA()
 			this.parseMultiplication()
 			console.log(this._pile)
 		}
@@ -109,8 +91,6 @@ class Parser {
 
 		return true
 	}
-
-
 
 	parsePlus(){
 		this._pile.push(this._pile.pop()+this._pile.pop())
