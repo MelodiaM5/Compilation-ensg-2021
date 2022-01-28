@@ -72,7 +72,7 @@ E -> '!' A | n
 ```
        '-'
        /  \
-	'*'    5
+     '*'   5
      /   \
    '*'   '+'
    / \   / \
@@ -85,10 +85,13 @@ E -> '!' A | n
 
 8 - A partir du premier AST, schematisez ce qu'il se passe dans la pile d'exécution lors de sa resolution
 (vous devez dessiner une pile pour chaque étape en précisant les operations effectuées si nécéssaire) **(2 points)**
+
+```
 | 1| -> |1| -> |+| -> |2| -> |2|-> |*| -> |4| -> |3|-> |4| -> |+| -> |7| -> |*| -> |28| -> |5| -> |-| -> |23|
         |1|    |1|           |2|   |2|           |4|   |3|    |4|    |4|    |7|            |28|   |5|
 		       |1|                 |2|                 |4|    |3|           |4|                   |28|
 			                                                  |4|
+```
 9 - Dans une machine à pile, à l'aide des operations PUSH n, ADD et MULT écrivez un pseudo programme machine qui correspond à la formule de la question 7 : 
 push 1
 push 1
