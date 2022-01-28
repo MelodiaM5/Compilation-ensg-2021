@@ -1,7 +1,7 @@
 const Lexer = require('./Lexer')
 const Parser = require('./Parser')
 
-const src = '2 + ( 7 - 2 )*3 + 4 * 5'
+const src = '2 + ( 7 - 2 ) + 4 * 5'
 //const src = '1234'
 
 const tokens = new Lexer().parse(src)
