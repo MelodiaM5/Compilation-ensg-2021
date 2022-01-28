@@ -18,97 +18,115 @@ class Parser {
 		}
 	}
 	
-	get posPlus1(){
-		return this._tokens[this._cursor+1]
-	}
 
 	consume() {
-		this._currentWord += this.current
 		this._cursor++;
 	}
 
+
 	parser(tokens) {
 		this._tokens = tokens
-		console.log(this._tokens)
-		this.parseA()
 
-		console.log(this._pile)
+		this.parserA();
 
 		this._result = this._pile.pop()
+		console.log(this._pile)
 
 		return this._result
 	}
 
-	parseA(){
+	parserA(){
 
 		if(this.current._type == TokenType.NUMBER){
+
 			this._pile.push(parseInt(this.current._name))
 			this.consume()
-			this.parseB()
-			this.parseA()
+			console.log(this._pile)
+			this.parserB()
 		}
 		else if(this.current._type == TokenType.PAROUVERTE){
-			this.consume();
-			this.parseA;
 			this.consume()
-			this.parseB()
+			console.log(this._pile)
+			this.parserA()
+			this.consume()
+			console.log(this._pile)
+			if(this.current){
+				this.parserB()
+		}else{
+			return true
 		}
+	}
+	return true
+}
 
+	parserB(){
+		if(this.current){
+
+		
+		if(this.current._type==TokenType.PLUS){
+			this.consume()
+			console.log(this._pile)
+			this.parserA()
+			this.parsePlus()
+			console.log(this._pile)
+		}
+		else if(this.current._type==TokenType.MOINS){
+			this.consume()
+			console.log(this._pile)
+			this.parserA()
+			this.parseMoins()
+			console.log(this._pile)
+		}
+		else if(this.current._type==TokenType.MULTIPLICATION){
+
+			this.consume()
+			this.parserC()
+		}
+		else if(this.current._type==TokenType.PARFERM){
+			return true
+		}
 		return true
-
 	}
 
-	parseB(){
-		if(this.current){
-			if(this.current._type == TokenType.PLUS){
-				if(this.posPlus1._type == TokenType.NUMBER){
-					this.parsePlus()
-					this.consume()
-					this.consume()
-					if(this.current){
-						if(this.current._type == TokenType.PAROUVERTE){
-							this.parseA();
-						}	
-					this.parseB()
-					}
-					return true;
-				}
-				this.parseA()
-				this.parseB()
-			}else if (this.current._type == TokenType.MOINS){
-				if(this.posPlus1._type == TokenType.NUMBER){
-					this.parseMoins()
-					this.consume()
-					this.consume()
-					console.log('hrllo')
-					if(this.current){
-						if(this.current._type == TokenType.PAROUVERTE){
-							this.parseA();
-						}	
-					this.parseB()
-					}
-					return true;
-				}
-
-		}
-		this.parseA()
-		}
 		return true
+	}
 
+	parserC(){
+		if(this.current._type == TokenType.NUMBER){
+			this._pile.push(this._pile.pop()*parseInt(this.current._name))
+			this.consume()
+		}else{
+			this.parserA()
+		}
+
+		return true
+	}
+
+	
+
+
+
+	parsePlus(){
+		this._pile.push(this._pile.pop()+this._pile.pop())
+		return true
 	}
 
 	parseMoins(){
-		this._pile.push(this._pile.pop()-parseInt(this.posPlus1._name))
+		let a = this._pile.pop()
+		console.log(a)
+		this._pile.push(this._pile.pop()-a)
 	}
 
-	parsePlus(){
-		this._pile.push(this._pile.pop() + parseInt(this.posPlus1._name))
-		return true
+	parseMultiplication(){
+		this._pile.push(this._pile.pop()*this._pile.pop())
+		console.log('hello')
 	}
 
-	parsePlusPar(){
-		this._pile.push(this._pile.pop()+this._pile.pop())
-	}
+
+
+		
 }
 
 module.exports = Parser
+
+//piste pour multiplication ajout d'un parse c pour gérér l'ordre.
