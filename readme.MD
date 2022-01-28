@@ -69,6 +69,8 @@ E -> '!' A | n
 7 - Dessinez l'AST correspondant à la formule suivante, avec le respect de la précédence des opérateurs : 
   - `(1 + 1) * 2 * (3 + 4) - 5`
 
+C'est plus beau quand on regarde en mode édition
+
 ```
        '-'
        /  \
@@ -85,6 +87,8 @@ E -> '!' A | n
 
 8 - A partir du premier AST, schematisez ce qu'il se passe dans la pile d'exécution lors de sa resolution
 (vous devez dessiner une pile pour chaque étape en précisant les operations effectuées si nécéssaire) **(2 points)**
+
+C'est plus beau quand on regarde en mode édition
 
 ```
 | 1| -> |1| -> |+| -> |2| -> |2|-> |*| -> |4| -> |3|-> |4| -> |+| -> |7| -> |*| -> |28| -> |5| -> |-| -> |23|
